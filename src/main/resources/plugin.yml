@@ -1,7 +1,23 @@
 name: WhoDidIt
 version: 1.0-SNAPSHOT
 main: me.vibrantrida.whodidit.WhoDidIt
-api-version: 1.15.2
+api-version: 1.15
 prefix: WDI
-authors: [vibrantrida
+authors: [vibrantrida]
 description: Who Did It? Minigame Plugin for Spigot 1.15+
+commands:
+  whodidit:
+    description: Base WhoDidIt command
+  whodidit join:
+    description: Join the round or queue for the next round
+  whodidit list:
+    description: List all players in the current round
+  whodidit spectate:
+    description: Change to spectator mode
+permissions:
+  whodidit.command.join:
+    description: Gives player access to join command
+  whodidit.command.list:
+    description: Gives player access to list command
+  whodidit.command.spectate:
+    description: Gives player access to spectate command

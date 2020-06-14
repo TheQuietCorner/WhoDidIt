@@ -1,0 +1,3 @@
+debug-level: info
+game:
+  minimum-players: 5
