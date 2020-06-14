@@ -1,0 +1,7 @@
+name: WhoDidIt
+version: 1.0-SNAPSHOT
+main: me.vibrantrida.whodidit.WhoDidIt
+api-version: 1.15.2
+prefix: WDI
+authors: [vibrantrida
+description: Who Did It? Minigame Plugin for Spigot 1.15+
