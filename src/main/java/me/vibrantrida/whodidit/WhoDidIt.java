@@ -5,7 +5,9 @@ import me.vibrantrida.whodidit.commands.CommandHandler;
 import me.vibrantrida.whodidit.commands.subcommands.*;
 import me.vibrantrida.whodidit.files.ConfigFile;
 import me.vibrantrida.whodidit.listeners.PlayerListener;
+import me.vibrantrida.whodidit.managers.GameManager;
 import me.vibrantrida.whodidit.utils.DebugLogger;
+
 import org.bukkit.command.PluginCommand;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -32,6 +34,10 @@ public final class WhoDidIt extends JavaPlugin {
         command.setExecutor(handler);
     }
 
+    public static JavaPlugin getInstance() {
+        return instance;
+    }
+
     @Override
     public void onEnable() {
         instance = this;
@@ -44,15 +50,14 @@ public final class WhoDidIt extends JavaPlugin {
         registerEventListeners();
         registerCommands();
 
+        // initialize game manager
+        GameManager gameManager = GameManager.getInstance();
+
         DebugLogger.info("WhoDidIt enabled!");
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-    }
-
-    public static JavaPlugin getInstance() {
-        return instance;
     }
 }
