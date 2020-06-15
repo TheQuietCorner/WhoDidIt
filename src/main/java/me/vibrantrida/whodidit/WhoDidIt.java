@@ -2,9 +2,7 @@ package me.vibrantrida.whodidit;
 
 import me.vibrantrida.whodidit.commands.BaseCommand;
 import me.vibrantrida.whodidit.commands.CommandHandler;
-import me.vibrantrida.whodidit.commands.subcommands.JoinSubcommand;
-import me.vibrantrida.whodidit.commands.subcommands.ListSubcommand;
-import me.vibrantrida.whodidit.commands.subcommands.SpectateSubcommand;
+import me.vibrantrida.whodidit.commands.subcommands.*;
 import me.vibrantrida.whodidit.files.ConfigFile;
 import me.vibrantrida.whodidit.listeners.PlayerListener;
 import me.vibrantrida.whodidit.utils.DebugLogger;
@@ -24,9 +22,12 @@ public final class WhoDidIt extends JavaPlugin {
     }
 
     private void registerCommands() {
-        CommandHandler handler = new CommandHandler().register("whodidit", new BaseCommand())
-                .register("join", new JoinSubcommand()).register("list", new ListSubcommand())
-                .register("spectate", new SpectateSubcommand());
+        CommandHandler handler = new CommandHandler()
+            .register("whodidit", new BaseCommand())
+            .register("join", new JoinSubcommand())
+            .register("list", new ListSubcommand())
+            .register("spectate", new SpectateSubcommand())
+            .register("forcestart", new ForceStartSubcommand());
         PluginCommand command = getCommand("whodidit");
         command.setExecutor(handler);
     }
