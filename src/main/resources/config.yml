@@ -2,3 +2,4 @@ debug-level: info
 game:
   countdown: 30 # 30 seconds
   minimum-players: 5
+  maximum-players: 8

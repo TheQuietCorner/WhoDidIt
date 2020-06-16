@@ -18,6 +18,7 @@ public class GameManager {
     private HashMap<UUID, Player> players;
     private Player killer;
     private int minimumPlayers;
+    private int maximumPlayers;
 
     private BukkitTask task;
 
@@ -30,6 +31,7 @@ public class GameManager {
     private GameManager() {
         players = new HashMap<>();
         minimumPlayers = WhoDidIt.getInstance().getConfig().getInt("game.minimum-players");
+        maximumPlayers = WhoDidIt.getInstance().getConfig().getInt("game.maximum-players");
     }
 
     public static GameManager getInstance() {
@@ -44,12 +46,20 @@ public class GameManager {
         return minimumPlayers;
     }
 
+    public int getMaximumPlayers() {
+        return maximumPlayers;
+    }
+
     public HashMap<UUID, Player> getPlayers() {
         return players;
     }
 
     public HashMap<UUID, Player> addPlayer(Player player) {
         if (getPlayers().containsValue(player) == true) {
+            return null;
+        }
+        if (getPlayers().size() >= getMaximumPlayers()) {
+            QueueManager.getInstance().addPlayer(player);
             return null;
         }
         players.put(player.getUniqueId(), player);
@@ -111,9 +121,18 @@ public class GameManager {
                                 killer.sendMessage("...and it is YOU!");
                                 cancelGameTask();
                             }
+                            state = GameState.PLAY;
                             return;
                         }
                         return;
+                    } else if (getState() == GameState.PLAY) {
+                        if (getPlayers().size() < 2) {
+                            if (killer.getGameMode() != GameMode.SPECTATOR) {
+                                // killer wins
+                            } else {
+                                // survivors wins
+                            }
+                        }
                     }
                     return;
                 }
