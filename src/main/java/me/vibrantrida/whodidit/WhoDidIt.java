@@ -7,6 +7,8 @@ import me.vibrantrida.whodidit.commands.subcommands.ListSubcommand;
 import me.vibrantrida.whodidit.commands.subcommands.SpectateSubcommand;
 import me.vibrantrida.whodidit.files.ConfigFile;
 import me.vibrantrida.whodidit.listeners.PlayerListener;
+import me.vibrantrida.whodidit.managers.GameManager;
+import me.vibrantrida.whodidit.managers.QueueManager;
 import me.vibrantrida.whodidit.utils.DebugLogger;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.event.Listener;
@@ -36,8 +38,11 @@ public final class WhoDidIt extends JavaPlugin {
         instance = this;
 
         // initialize configuration
-        ConfigFile config = ConfigFile.getInstance();
-        config.initialize();
+        ConfigFile.getInstance().initialize();
+
+        // initialize managers
+        QueueManager.getInstance();
+        GameManager.getInstance();
 
         // register event listeners and commands
         registerEventListeners();

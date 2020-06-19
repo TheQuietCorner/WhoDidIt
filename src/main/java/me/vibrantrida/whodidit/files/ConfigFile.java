@@ -70,4 +70,12 @@ public class ConfigFile {
         config = YamlConfiguration.loadConfiguration(configFile);
         return this;
     }
+
+    public int getMinimumPlayers() {
+        return getConfig().getInt("game.minimum-players", 5);
+    }
+
+    public int getMaximumPlayers() {
+        return getConfig().getInt("game.maximum-players", 16);
+    }
 }
