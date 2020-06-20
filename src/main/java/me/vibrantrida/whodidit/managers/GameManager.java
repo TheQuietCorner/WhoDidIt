@@ -32,6 +32,10 @@ public class GameManager {
     private Game game = new Game();
     private BukkitTask task;
 
+    public Game getGame() {
+        return game;
+    }
+
     public void matchPlayers() {
         DebugLogger.debug("GameManager: matching players...");
         if (QueueManager.getInstance().getPlayerCount() > 0) {
@@ -55,8 +59,10 @@ public class GameManager {
                         game.addPlayer(player);
                         DebugLogger.debug("GameManager: added player: " + uuid.toString());
                     }
+                    DebugLogger.info("GameManager: starting game...");
+                    game.startPregame();
                 } else {
-                    DebugLogger.debug("GameManager: no queued players");
+                    DebugLogger.debug("GameManager: not enough players in queue");
                 }
             } else {
                 DebugLogger.debug("GameManager: game is full!");

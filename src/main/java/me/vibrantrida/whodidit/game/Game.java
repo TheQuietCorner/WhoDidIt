@@ -5,42 +5,81 @@ import java.util.UUID;
 
 import org.bukkit.entity.Player;
 
+import me.vibrantrida.whodidit.utils.DebugLogger;
+import me.vibrantrida.whodidit.utils.PlayerUtils;
+
 public class Game {
-  private UUID uuid = UUID.randomUUID();
+    private UUID uuid = UUID.randomUUID();
 
-  private HashMap<UUID, Player> players = new HashMap<>();
+    private GameState state = GameState.WAIT;
 
-  public HashMap<UUID, Player> getPlayers() {
-    return players;
-  }
+    private HashMap<UUID, Player> players = new HashMap<>();
 
-  public UUID getUUID() {
-    return uuid;
-  }
-
-  public int getPlayerCount() {
-    return players.size();
-  }
-
-  public Player addPlayer(Player player) {
-    if (players.containsKey(player.getUniqueId()) == true) {
-      return null;
+    public HashMap<UUID, Player> getPlayers() {
+        return players;
     }
-    return players.put(player.getUniqueId(), player);
-  }
 
-  public Player getPlayer(UUID uuid) {
-    if (players.containsKey(uuid) == false) {
-      return null;
+    public UUID getUUID() {
+        return uuid;
     }
-    return players.get(uuid);
-  }
 
-  public Player removePlayer(UUID uuid) {
-    if (players.containsKey(uuid) == false) {
-      return null;
+    public GameState getState() {
+        return state;
     }
-    return players.remove(uuid);
-  }
 
+    public GameState setState(GameState newState) {
+        state = newState;
+        DebugLogger.debug("Game: set state to '" + state.toString() + "'");
+        return state;
+    }
+
+    public int getPlayerCount() {
+        int count = players.size();
+        DebugLogger.debug("Game: " + Integer.toString(count) + "players currently in-game");
+        return count;
+    }
+
+    public Player addPlayer(Player player) {
+        if (players.containsKey(player.getUniqueId()) == true) {
+            return null;
+        }
+        DebugLogger.debug("Game: added player with UUID: " + player.getUniqueId().toString());
+        return players.put(player.getUniqueId(), player);
+    }
+
+    public Player getPlayer(UUID uuid) {
+        if (players.containsKey(uuid) == false) {
+            return null;
+        }
+        return players.get(uuid);
+    }
+
+    public Player removePlayer(UUID uuid) {
+        if (players.containsKey(uuid) == false) {
+            return null;
+        }
+        DebugLogger.debug("Game: removed player with UUID: " + uuid.toString());
+        return players.remove(uuid);
+    }
+
+    public void startPregame() {
+        DebugLogger.debug("Game: started pre-game!");
+
+        DebugLogger.debug("Game: setting state to 'PRE'");
+        setState(GameState.PRE);
+
+        DebugLogger.debug("Game: readying players...");
+        players.forEach((uuid, player) -> {
+            PlayerUtils.readyPlayer(player);
+        });
+
+        startGame();
+    }
+
+    public void startGame() {
+        DebugLogger.debug("Game: started game!");
+
+        DebugLogger.debug("Game: setting state to 'PLAY'");
+        setState(GameState.PLAY);
+    }
 }
